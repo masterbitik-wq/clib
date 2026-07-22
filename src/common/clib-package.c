@@ -504,6 +504,7 @@ clib_package_t *clib_package_new(const char *json, int verbose) {
                     pkg->flags = "";
                 }
                 if (-1 == asprintf(&pkg->flags, "%s %s", pkg->flags, flag)) {
+                    free(flag);
                     goto cleanup;
                 }
                 free(flag);
