@@ -1,0 +1,5 @@
+=== flags-leak ===
+Command: env  /workspace/test/leak/flags-loop-repro
+
+
+Exit code: 1

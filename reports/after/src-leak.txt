@@ -1,0 +1,5 @@
+=== src-leak ===
+Command: env FAIL_LIST_NODE_NEW=1 /workspace/test/leak/package-leak-src
+
+
+Exit code: 0
