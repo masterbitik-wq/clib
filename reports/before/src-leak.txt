@@ -1,0 +1,20 @@
+=== src-leak ===
+Command: env FAIL_LIST_NODE_NEW=1 /workspace/test/leak/package-leak-src
+
+
+=================================================================
+==7535==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 6 byte(s) in 1 object(s) allocated from:
+    #0 0x7f0c8073a9c7 in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:69
+    #1 0x56042b58675b in strdup ../../deps/strdup/strdup.c:24
+    #2 0x56042b53ea15 in json_array_get_string_safe ../../src/common/clib-package.c:198
+    #3 0x56042b540337 in clib_package_new ../../src/common/clib-package.c:550
+    #4 0x56042b53e18c in main /workspace/test/leak/package-leak-src.c:15
+    #5 0x7f0c803941c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: 8e9fd827446c24067541ac5390e6f527fb5947bb)
+    #6 0x7f0c8039428a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: 8e9fd827446c24067541ac5390e6f527fb5947bb)
+    #7 0x56042b53df74 in _start (/workspace/test/leak/package-leak-src+0x4ef74) (BuildId: fa9e0cab8e5e7139eac352447671fdf9458c5ff1)
+
+SUMMARY: AddressSanitizer: 6 byte(s) leaked in 1 allocation(s).
+
+Exit code: 42

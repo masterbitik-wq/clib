@@ -504,7 +504,6 @@ clib_package_t *clib_package_new(const char *json, int verbose) {
                     pkg->flags = "";
                 }
                 if (-1 == asprintf(&pkg->flags, "%s %s", pkg->flags, flag)) {
-                    free(flag);   // <--- добавил эту строку
                     goto cleanup;
                 }
                 free(flag);
@@ -550,14 +549,10 @@ clib_package_t *clib_package_new(const char *json, int verbose) {
     for (unsigned int i = 0; i < json_array_get_count(src); i++) {
         char *file = json_array_get_string_safe(src, i);
         _debug("file: %s", file);
-        if (!file) {
-            free(file);            // <--- добавил эту строку
+        if (!file)
             goto cleanup;
-        }
-        if (!(list_rpush(pkg->src, list_node_new(file)))) {
-            free(file);            // <--- добавил эту строку
+        if (!(list_rpush(pkg->src, list_node_new(file))))
             goto cleanup;
-        }
     }
   } else {
       _debug("no src files listed in clib.json or package.json file");
