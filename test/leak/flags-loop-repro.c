@@ -68,6 +68,7 @@ int main(void) {
         pkg_flags = "";
       }
       if (-1 == pkg_asprintf(&pkg_flags, "%s %s", pkg_flags, flag)) {
+        free(flag);
         goto cleanup;
       }
       free(flag);
