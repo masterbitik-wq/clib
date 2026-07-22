@@ -1,26 +1,23 @@
-# clib — исправление утечек памяти
+# clib
 
-Найдены и исправлены две утечки памяти в функции `clib_package_new` (файл `src/common/clib-package.c`).
+Исправлены две утечки памяти в функции `clib_package_new` (файл `src/common/clib-package.c`).
 
-## Найденные утечки
+## Утечки
 
-1. **Утечка при обработке флагов** — при ошибке `asprintf` в цикле по массиву `flags`/`cflags` не освобождалась строка `flag`.
-2. **Утечка при обработке списка исходников** — при ошибках в цикле по массиву `src`/`files` не освобождалась строка `file`.
-
-## Исправления
-
-Каждое исправление вынесено в отдельный коммит (см. историю git).
+1. При обработке массива `flags` — добавлен `free(flag)` при ошибке `asprintf`.
+2. При обработке массива `src` — добавлен `free(file)` в двух ветках ошибок.
 
 ## Проверка
 
-Анализ проведён с помощью AddressSanitizer (Valgrind недоступен в MSYS2).
-
-Подробный отчёт «до / после» с выводом ASan: **[ASAN_REPORT.md](ASAN_REPORT.md)**
-
-Быстрый запуск тестов:
+Использовал AddressSanitizer (valgrind в MSYS2 нет):
 
 ```bash
-cd test/leak
-./run-asan-report.sh reports/before   # до исправлений (на коммите до фиксов)
-./run-asan-report.sh reports/after    # после всех исправлений
+make CFLAGS="-fsanitize=address -g -O0" LDFLAGS="-fsanitize=address"
+ASAN_OPTIONS=detect_leaks=1 ./test.sh
 ```
+
+Отчёты:
+- `reports/before/` — до исправлений
+- `reports/after/` — после исправлений
+
+Подробнее: `ASAN_REPORT.md`
