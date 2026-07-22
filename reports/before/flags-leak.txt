@@ -1,0 +1,20 @@
+=== flags-leak ===
+Command: env  /workspace/test/leak/flags-loop-repro
+
+
+=================================================================
+==7533==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 7 byte(s) in 1 object(s) allocated from:
+    #0 0x7f526cf479c7 in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:69
+    #1 0x7f526ccc7947  (/lib/x86_64-linux-gnu/libc.so.6+0x8f947) (BuildId: 8e9fd827446c24067541ac5390e6f527fb5947bb)
+    #2 0x7f526cf1932e in vasprintf ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:1680
+    #3 0x7f526cf1a9eb in asprintf ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:1732
+    #4 0x556e095819e3 in main /workspace/test/leak/flags-loop-repro.c:70
+    #5 0x7f526cc621c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: 8e9fd827446c24067541ac5390e6f527fb5947bb)
+    #6 0x7f526cc6228a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: 8e9fd827446c24067541ac5390e6f527fb5947bb)
+    #7 0x556e09581284 in _start (/workspace/test/leak/flags-loop-repro+0x1284) (BuildId: d198db7bf70b39a7a22a0085b0ed8ea7fb5cafd0)
+
+SUMMARY: AddressSanitizer: 7 byte(s) leaked in 1 allocation(s).
+
+Exit code: 42

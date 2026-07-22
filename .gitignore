@@ -1,0 +1,6 @@
+*.o
+*.so
+test/leak/flags-loop-repro
+test/leak/package-leak-src
+test/leak/package-leak-flags
+test/package/package-*
